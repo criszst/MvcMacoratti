@@ -14,8 +14,11 @@ public class Startup
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
+        var connetionString = Configuration.GetConnectionString("DefaultConnection");
         services.AddDbContext<AppDbContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("DefauultConnection")));
+
+        options.UseMySql(connetionString, ServerVersion.AutoDetect(connetionString),
+        b => b.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName)));
 
         services.AddControllersWithViews();
     }
