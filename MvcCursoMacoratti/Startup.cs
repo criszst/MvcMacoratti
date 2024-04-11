@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MvcMacorattiLanchesMac.Context;
+using MvcMacorattiLanchesMac.Repositories;
+using MvcMacorattiLanchesMac.Repositories.Interfaces;
 
 namespace LanchesMac;
 public class Startup
@@ -19,6 +21,9 @@ public class Startup
 
         options.UseMySql(connetionString, ServerVersion.AutoDetect(connetionString),
         b => b.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName)));
+
+        services.AddTransient<ILancheRepository, LancheRepository>();
+        services.AddTransient<ICategoriaRepository, CategoriaRepository>();
 
         services.AddControllersWithViews();
     }

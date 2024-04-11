@@ -10,8 +10,8 @@ using MvcMacorattiLanchesMac.Context;
 namespace MvcMacorattiLanchesMac.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240409025756_PopularCategoria")]
-    partial class PopularCategoria
+    [Migration("20240410223808_PopularCategorias")]
+    partial class PopularCategorias
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
