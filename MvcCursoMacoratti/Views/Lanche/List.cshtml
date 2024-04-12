@@ -4,9 +4,19 @@
     <h2>Todos os Lanches</h2>
 </div>
 
-@foreach(var lanche in Model)
-{
-    <h4>@lanche.Nome</h4>
-    <p> <img src="@lanche.ImagemThumbUrl" /> </p>
-    <h3>@lanche.Preco.ToString("c")</h3>
-}
+<div class="container">
+    <div class="row">
+       
+        @foreach(var lanche in Model)
+        {
+            <div class="col-sm-4 col-md-4 col-lg4">
+                <p> <img src="@lanche.ImagemThumbUrl" class="img-fluid" /> </p>
+                <h3>@lanche.Nome</h3>
+                <h4>Preço: @lanche.Preco.ToString("c")</h4>
+                <p>@lanche.DescricaoCurta</p>
+            </div>
+        }
+
+    </div>
+
+</div>
