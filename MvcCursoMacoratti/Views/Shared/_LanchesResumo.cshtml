@@ -1,0 +1,8 @@
+﻿@model MvcMacorattiLanchesMac.Models.Lanche
+
+<div class="col-sm-4 col-md-4 col-lg4">
+    <p> <img src="@Model.ImagemThumbUrl" class="img-fluid" /> </p>
+    <h3>@Model.Nome</h3>
+    <h4>Preço: @Model.Preco.ToString("c")</h4>
+    <p>@Model.DescricaoCurta</p>
+</div>

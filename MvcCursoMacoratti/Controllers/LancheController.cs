@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MvcMacorattiLanchesMac.Repositories.Interfaces;
+using MvcMacorattiLanchesMac.ViewModel;
 
 namespace MvcMacorattiLanchesMac.Controllers
 {
@@ -14,8 +15,13 @@ namespace MvcMacorattiLanchesMac.Controllers
 
         public IActionResult List()
         {
-            var lanches = _lancheRepository.Lanches;
-            return View(lanches);
+            //var lanches = _lancheRepository.Lanches;
+            //return View(lanches);
+            var lanchesListModel = new LancheListViewModel();
+            lanchesListModel.Lanches = _lancheRepository.Lanches;
+            lanchesListModel.CategoriaAtual = "Categoria Atual";
+
+            return View(lanchesListModel);
         }
     }
 }
