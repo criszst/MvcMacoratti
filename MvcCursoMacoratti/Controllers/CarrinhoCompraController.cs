@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MvcMacorattiLanchesMac.Models;
 using MvcMacorattiLanchesMac.Repositories.Interfaces;
+using MvcMacorattiLanchesMac.ViewModels;
 
 namespace MvcMacorattiLanchesMac.Controllers
 {
@@ -17,7 +18,39 @@ namespace MvcMacorattiLanchesMac.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var itens = _carrinhoCompra.GetCarrinhoCompraItems();
+            _carrinhoCompra.CarrinhoCompraItems = itens;
+
+            var carrinhoCompraVM = new CarrinhoCompraViewModel
+            {
+                CarrinhoCompra = _carrinhoCompra,
+                CarrinhoCompraTotal = _carrinhoCompra.GetCarrinhoCompraTotal()
+            };
+            return View(carrinhoCompraVM);
+        }
+
+        public IActionResult AdicionarItemCompra(int lancheID)
+        {
+            var lancheSelect = _lancheRepository.Lanches.FirstOrDefault(l => l.LancheId == lancheID);
+
+            if (lancheSelect != null)
+            {
+                _carrinhoCompra.AddCarrinho(lancheSelect);
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult RemoveItemCompra (int lancheID)
+        {
+            var lancheSelect = _lancheRepository.Lanches.FirstOrDefault(l => l.LancheId == lancheID);
+
+            if (lancheSelect != null)
+            {
+                _carrinhoCompra.RemoveCarrinho(lancheSelect);
+            }
+
+            return RedirectToAction("Index");
         }
     }
 }
