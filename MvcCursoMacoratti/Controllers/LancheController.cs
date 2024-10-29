@@ -18,34 +18,22 @@ namespace MvcMacorattiLanchesMac.Controllers
         {
             IEnumerable<Lanche> lanches;
             string categoriaAtual = string.Empty;
-            
+
 
             if (string.IsNullOrEmpty(categoria))
             {
                 lanches = _lancheRepository.Lanches.OrderBy(l => l.LancheId);
                 categoriaAtual = "Todos os Lanches";
-            } 
-            //else
-            //{
-            //    if (string.Equals("Normal", categoria, StringComparison.OrdinalIgnoreCase))
-            //    {
-            //        lanches = _lancheRepository.Lanches
-            //            // tambem posso colocar o Equals("Normal") em vez de ==
-            //            .Where(l => l.Categoria.CategoriaNome == "Normal")
-            //            .OrderBy(l => l.Nome);
-            //    } 
-            //    else
-            //    {
-            //        lanches = _lancheRepository.Lanches
-            //            .Where(l => l.Categoria.CategoriaNome == "Natural")
-            //            .OrderBy(l => l.Nome);
-            //    }
+            }
+            else
+            {
 
+                lanches = _lancheRepository.Lanches
+                    .Where(l => l.Categoria.CategoriaNome.Equals(categoria))
+                    .OrderBy(l => l.Nome);
 
-                
-            //        categoriaAtual = categoria;
-                
-            //}
+                categoriaAtual = categoria;
+            }
 
             var lanchesListModel = new LancheListViewModel
             {
