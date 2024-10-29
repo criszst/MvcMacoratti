@@ -62,10 +62,9 @@ public class Startup
         {
 
             endpoints.MapControllerRoute(
-                name: "categoriaFiltro",
-                pattern: "Lanche/{action}/{categoria?}",
-                defaults: new { controller = "Lanche", Action = "List" }
-                );
+               name: "categoriaFiltro",
+               pattern: "Lanche/{action}/{categoria?}",
+               defaults: new { Controller = "Lanche", action = "List" });
 
 
             endpoints.MapControllerRoute(

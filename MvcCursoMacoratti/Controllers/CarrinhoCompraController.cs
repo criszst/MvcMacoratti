@@ -31,13 +31,13 @@ namespace MvcMacorattiLanchesMac.Controllers
 
         public IActionResult AdicionarItemCompra(int lancheID)
         {
-            var lancheSelect = _lancheRepository.Lanches.FirstOrDefault(l => l.LancheId == lancheID);
+            var lancheSelecionado = _lancheRepository.Lanches
+                                     .FirstOrDefault(p => p.LancheId == lancheID);
 
-            if (lancheSelect != null)
+            if (lancheSelecionado != null)
             {
-                _carrinhoCompra.AddCarrinho(lancheSelect);
+                _carrinhoCompra.AddCarrinho(lancheSelecionado);
             }
-
             return RedirectToAction("Index");
         }
 

@@ -43,5 +43,11 @@ namespace MvcMacorattiLanchesMac.Controllers
 
             return View(lanchesListModel);
         }
+
+        public IActionResult Details(int lancheID)
+        {
+            var lanche = _lancheRepository.Lanches.FirstOrDefault(l => l.LancheId == lancheID);
+            return View(lanche);
+        }
     }
 }
