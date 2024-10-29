@@ -29,17 +29,18 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-center">
 
+
+                    
                     <ul class="navbar-nav justify-content-center">
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Lanche" asp-action="List">Lanches</a>
-                        </li>
-                        <li class="nav-item">
-                            @await Component.InvokeAsync("CarrinhoCompraResumo")
+                            <a class="nav-link text-light" asp-area="" asp-controller="Contato" asp-action="Index">Contato</a>
                         </li>
 
+                        @await Component.InvokeAsync("CarrinhoCompraResumo")
+                        @await Component.InvokeAsync("CategoriaMenu")
                     </ul>
                 </div>
             </div>
