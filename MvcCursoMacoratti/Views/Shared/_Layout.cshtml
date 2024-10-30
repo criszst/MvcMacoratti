@@ -28,8 +28,6 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-center">
-
-
                     
                     <ul class="navbar-nav justify-content-center">
                         <li class="nav-item">
@@ -41,7 +39,16 @@
 
                         @await Component.InvokeAsync("CarrinhoCompraResumo")
                         @await Component.InvokeAsync("CategoriaMenu")
+
+                        <form class="navbar-form navbar-right" asp-controller="Lanche" asp-action="Search" method="get">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Procurar produto" name="searchString" value="@ViewData["searchString"]">
+                            </div>
+                        </form>
                     </ul>
+
+
+
                 </div>
             </div>
         </nav>
