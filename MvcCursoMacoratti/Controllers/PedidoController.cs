@@ -1,16 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Razor.TagHelpers;
 using MvcMacorattiLanchesMac.Models;
 using MvcMacorattiLanchesMac.Repositories.Interfaces;
 
-namespace MvcMacorattiLanchesMac.Controllers
+namespace LanchesMac.Controllers
 {
     public class PedidoController : Controller
     {
         private readonly IPedidoRepository _pedidoRepository;
         private readonly CarrinhoCompra _carrinhoCompra;
 
-        public PedidoController(IPedidoRepository pedidoRepository, CarrinhoCompra carrinhoCompra)
+        public PedidoController(IPedidoRepository pedidoRepository,
+            CarrinhoCompra carrinhoCompra)
         {
             _pedidoRepository = pedidoRepository;
             _carrinhoCompra = carrinhoCompra;
@@ -29,29 +29,34 @@ namespace MvcMacorattiLanchesMac.Controllers
             decimal precoTotalPedido = 0.0m;
 
             List<CarrinhoCompraItem> items = _carrinhoCompra.GetCarrinhoCompraItems();
-
             _carrinhoCompra.CarrinhoCompraItems = items;
 
             if (_carrinhoCompra.CarrinhoCompraItems.Count == 0)
             {
-                ModelState.AddModelError("", "Seu carrinho está vazio, inclua um lancha para prosseguir.");
+                ModelState.AddModelError("", "Seu carrinho esta vazio, que tal incluir um lanche...");
             }
+
 
             foreach (var item in items)
             {
-                totalItensPedido = +item.Quantidade;
+                totalItensPedido += item.Quantidade;
                 precoTotalPedido += (item.Lanche.Preco * item.Quantidade);
             }
+
 
             pedido.TotalItensPedido = totalItensPedido;
             pedido.PedidoTotal = precoTotalPedido;
 
+
             if (ModelState.IsValid)
             {
+
                 _pedidoRepository.CriarPedido(pedido);
 
-                ViewBag.CheckoutSucessfull = "Obrigado pelo pedido! :)";
-                ViewBag.TotalPedido = _carrinhoCompra.GetCarrinhoCompraItems();
+
+                ViewBag.CheckoutCompletoMensagem = "Obrigado pelo seu pedido :)";
+                ViewBag.TotalPedido = _carrinhoCompra.GetCarrinhoCompraTotal();
+
 
                 _carrinhoCompra.LimparCarrinho();
 

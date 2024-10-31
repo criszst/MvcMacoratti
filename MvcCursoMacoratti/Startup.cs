@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using LanchesMac.Repositories;
+using Microsoft.EntityFrameworkCore;
 using MvcMacorattiLanchesMac.Context;
 using MvcMacorattiLanchesMac.Models;
 using MvcMacorattiLanchesMac.Repositories;
