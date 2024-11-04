@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MvcMacorattiLanchesMac.Models;
 using MvcMacorattiLanchesMac.Repositories.Interfaces;
 using MvcMacorattiLanchesMac.ViewModels;
@@ -29,6 +30,7 @@ namespace MvcMacorattiLanchesMac.Controllers
             return View(carrinhoCompraVM);
         }
 
+        [Authorize]
         public IActionResult AdicionarItemCompra(int lancheID)
         {
             var lancheSelecionado = _lancheRepository.Lanches
@@ -41,6 +43,7 @@ namespace MvcMacorattiLanchesMac.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         public IActionResult RemoveItemCompra (int lancheID)
         {
             var lancheSelect = _lancheRepository.Lanches.FirstOrDefault(l => l.LancheId == lancheID);

@@ -1,4 +1,5 @@
 ﻿using LanchesMac.Repositories;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MvcMacorattiLanchesMac.Context;
 using MvcMacorattiLanchesMac.Models;
@@ -23,6 +24,10 @@ public class Startup
 
         options.UseMySql(connetionString, ServerVersion.AutoDetect(connetionString),
         b => b.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName)));
+
+        services.AddIdentity<IdentityUser, IdentityRole>()
+            .AddEntityFrameworkStores<AppDbContext>()
+            .AddDefaultTokenProviders();
 
         services.AddTransient<ILancheRepository, LancheRepository>();
         services.AddTransient<ICategoriaRepository, CategoriaRepository>();
@@ -58,6 +63,7 @@ public class Startup
 
         app.UseSession();
 
+        app.UseAuthentication();
         app.UseAuthorization();
 
         app.UseEndpoints(endpoints =>
