@@ -1,10 +1,13 @@
 ﻿using LanchesMac.Repositories;
+using LanchesMac.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using MvcMacorattiLanchesMac.Areas.Admin.Services;
 using MvcMacorattiLanchesMac.Context;
 using MvcMacorattiLanchesMac.Models;
 using MvcMacorattiLanchesMac.Repositories;
 using MvcMacorattiLanchesMac.Repositories.Interfaces;
+using ReflectionIT.Mvc.Paging;
 
 namespace LanchesMac;
 public class Startup
@@ -33,18 +36,36 @@ public class Startup
         services.AddTransient<ICategoriaRepository, CategoriaRepository>();
         services.AddTransient<IPedidoRepository, PedidoRepository>();
 
+        services.AddScoped<RelatorioVendasService>();
+        services.AddScoped<ISeedUserRoleInitial, SeedUserRoleInitial>();
+
+        services.AddAuthorization(options =>
+        {
+            options.AddPolicy("Admin",
+                policy => {
+                    policy.RequireRole("Admin");
+                });
+        });
+
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
         services.AddScoped(sp => CarrinhoCompra.GetCarrinho(sp));
 
         services.AddControllersWithViews();
 
+        services.AddPaging(options =>
+        {
+            options.ViewName = "Bootstrap4";
+            options.PageParameterName = "pageindex";
+        });
+
         services.AddMemoryCache();
         services.AddSession();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env,
+                          ISeedUserRoleInitial seedUserRoleInitial)
     {
         if (env.IsDevelopment())
         {
@@ -61,6 +82,13 @@ public class Startup
 
         app.UseRouting();
 
+
+        // criando os cargos
+        seedUserRoleInitial.SeedRoles();
+
+        // criando os perfis/users
+        seedUserRoleInitial.SeedUsers();
+
         app.UseSession();
 
         app.UseAuthentication();
@@ -68,6 +96,9 @@ public class Startup
 
         app.UseEndpoints(endpoints =>
         {
+            endpoints.MapControllerRoute(
+            name: "areas",
+            pattern: "{area:exists}/{controller=Admin}/{action=Index}/{id?}");
 
             endpoints.MapControllerRoute(
                name: "categoriaFiltro",
@@ -78,6 +109,8 @@ public class Startup
             endpoints.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+
+            
         });
     }
 }

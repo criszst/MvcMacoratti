@@ -5,6 +5,10 @@ namespace MvcMacorattiLanchesMac.Models
 {
     public class Pedido
     {
+
+        public virtual List<PedidoDetalhe> PedidoItens { get; set; }
+
+
         public int PedidoId { get; set; }
 
         [Required(ErrorMessage = "Informe o nome")]
@@ -66,6 +70,6 @@ namespace MvcMacorattiLanchesMac.Models
         [DisplayFormat(DataFormatString = "{0: dd/MM/yyyy hh:mm}", ApplyFormatInEditMode = true)]
         public DateTime? PedidoEntregueEm { get; set; }
 
-        public List<PedidoDetalhe> PedidoItens { get; set; }
+
     }
 }
